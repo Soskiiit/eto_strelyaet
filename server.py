@@ -37,6 +37,7 @@ def get_last_frame_from_pi():
 
 
 
+find_client()
 th = Thread(target=get_last_frame_from_pi)
 th.start()
 

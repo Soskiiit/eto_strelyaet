@@ -12,7 +12,7 @@ def scan_Ip(ip):
     response = os.popen(comm)
     data = response.readlines()
     for line in data:
-        if 'TTL' in line:
+        if 'TTL' in line or "ttl" in line:
             local_ips.append(addr)
             break
 
