@@ -37,7 +37,7 @@ def get_last_frame_from_pi():
 
 
 
-find_client()
+# find_client()
 th = Thread(target=get_last_frame_from_pi)
 th.start()
 
@@ -50,7 +50,6 @@ app = Flask(__name__)
 
 def gen_frames():  # generate frame by frame from camera
     global last_frame
-    # frame = open("static/logo.jpg", "rb").read()  # ето тест, а так сюды в байтах ласт кадр кинем
     while True:
         frame = last_frame
         yield (b'--frame\r\n'
@@ -58,13 +57,16 @@ def gen_frames():  # generate frame by frame from camera
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return render_template("index_js.html")
 
-@app.route("/shoot/<w>/<h>")
+@app.route("/shooter/<w>/<h>")
 def shooter(w, h):
     print(w, h)
     return redirect("/")
 
+@app.route("/shoot")
+def shoot():
+    return "ok"
 
 @app.route("/video")
 def video():
