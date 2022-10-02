@@ -4,6 +4,14 @@ import threading
 import socket
 from datetime import datetime
 import cv2
+import time
+
+
+### PORTS
+# 5120 - initializing
+# 5220 - sharing cords between pi and server
+# 5320 - sharing images between pi and server
+# 4123 - web server for user
 
 
 def scan_Ip(ip):
@@ -48,9 +56,6 @@ def aim_n_shoot(x, y):
 
 
 def make_photos():
-    # изменить потом не забудь а то пиздец кринге будет
-    # изменить потом не забудь а то пиздец кринге будет
-    # изменить потом не забудь а то пиздец кринге будет
     cap = cv2.VideoCapture('test.mp4')
     i = 0
     while (cap.isOpened()):
@@ -59,18 +64,24 @@ def make_photos():
             break
         last_frame = cv2.imencode('.jpg', frame)[1].tobytes()
         i += 1
-        send_photos(last_frame)
+        try:
+            send_photos(last_frame)
+        except:
+            pass
 
 
 def send_photos(last_frame):
-    # изменить потом не забудь а то пиздец кринге будет
-    # изменить потом не забудь а то пиздец кринге будет
-    # изменить потом не забудь а то пиздец кринге будет
-    pass
+    global host_ip
+    sock = socket.socket()
+    sock.connect((host_ip, 5320))
+    print(f"[{time.time()}] I sent frame")
+    sock.send(last_frame)
+    sock.send(b"end")
+    sock.close()
 
 
-host = None
-while host == None:
+host_ip = None
+while host_ip == None:
     local_ips = []
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) #Создаем сокет (UDP)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1) # Настраиваем сокет на BROADCAST вещание.
@@ -95,6 +106,9 @@ while host == None:
     total = t2 - t1
     print("Scanning completed in: ", total)
     print(local_ips)
-    host = is_it_host()
-    print(host)
+    host_ip = is_it_host()
+    if host_ip != None:
+        print("host ip: " + host_ip)
+    else:
+        print("retrying to search host")
 make_photos()

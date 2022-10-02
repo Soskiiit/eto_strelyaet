@@ -4,7 +4,8 @@ import requests
 from base64 import decode
 import cv2
 from threading import Thread
-from time import sleep
+import time
+import os
 
 
 ### PORTS
@@ -34,7 +35,27 @@ def find_client():
 
 def get_last_frame_from_pi():
     global last_frame
-    pass
+    last_frame_tmp = b""
+    sock = socket.socket()
+    sock.bind(('', 5320))
+    sock.listen(1)
+    while True:
+        try:
+            conn, addr = sock.accept()
+            while True:
+                data = conn.recv(1024)
+                if not data:
+                    break
+                elif data[-3:] != b"end":
+                    last_frame_tmp += data
+                else:
+                    last_frame_tmp += data[:-3]
+                    last_frame = last_frame_tmp
+                    last_frame_tmp = b""
+                    # print(f"[{time.time()}] I got frame")
+            conn.close()
+        except:
+            pass
 
 
 
@@ -53,9 +74,14 @@ app = Flask(__name__)
 def gen_frames():  # generate frame by frame from camera
     global last_frame
     while True:
-        frame = last_frame
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+        try:
+            # оно в теории работает, но на практике чёт никак
+            frame = last_frame
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
+        except:
+            pass
+
 
 @app.route("/")
 def index():
