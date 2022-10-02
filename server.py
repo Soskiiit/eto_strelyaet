@@ -7,37 +7,39 @@ from threading import Thread
 from time import sleep
 
 
+### PORTS
+# 5120 - initializing
+# 5220 - sharing cords between pi and server
+# 5320 - sharing images between pi and server
+# 4123 - web server for user
+
+
 def find_client():
     sock = socket.socket()
     sock.bind(('', 5120))
     sock.listen(1)
-    conn, addr = sock.accept()
-    print('connected:', addr)
     while True:
-        data = conn.recv(1024)
-        if data == b"legd":
-            conn.send(b'lfga')
-        else:
-            conn.send(b'x')
-        if not data:
-            break
-    conn.close()
+        conn, addr = sock.accept()
+        print('connected:', addr)
+        while True:
+            data = conn.recv(1024)
+            if data == b"legd":
+                conn.send(b'lfga')
+            else:
+                conn.send(b'x')
+            if not data:
+                break
+        conn.close()
 
 
 def get_last_frame_from_pi():
     global last_frame
-    cap = cv2.VideoCapture('test.mp4')
-    i = 0
-    while (cap.isOpened()):
-        ret, frame = cap.read()
-        if ret == False:
-            break
-        last_frame = cv2.imencode('.jpg', frame)[1].tobytes()
-        i += 1
+    pass
 
 
 
-# find_client()
+th_con = Thread(target=find_client)
+th_con.start()
 th = Thread(target=get_last_frame_from_pi)
 th.start()
 
@@ -62,7 +64,7 @@ def index():
 @app.route("/shooter/<w>/<h>")
 def shooter(w, h):
     print(w, h)
-    return redirect("/")
+    return "ok"
 
 @app.route("/shoot")
 def shoot():
@@ -72,5 +74,7 @@ def shoot():
 def video():
     while True:
         return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
 
 app.run(host="0.0.0.0", debug=True, port=4123)
