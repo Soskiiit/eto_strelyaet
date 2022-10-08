@@ -34,7 +34,7 @@ def find_client():
 
 
 def get_last_frame_from_pi():
-    global last_frame
+    global last_frame, last_frame_get_time
     last_frame_tmp = b""
     sock = socket.socket()
     sock.bind(('', 5320))
@@ -46,23 +46,37 @@ def get_last_frame_from_pi():
                 data = conn.recv(1024)
                 if not data:
                     break
-                elif data[-3:] != b"end":
+                elif (last_frame_tmp + data)[-3:] != b"end":
                     last_frame_tmp += data
                 else:
-                    last_frame_tmp += data[:-3]
-                    last_frame = last_frame_tmp
+                    last_frame = (last_frame_tmp + data)[:-3]
                     last_frame_tmp = b""
-                    # print(f"[{time.time()}] I got frame")
+                    last_frame_get_time = int(time.time())
+                    # print(f"[{last_frame_get_time}] I got frame")
             conn.close()
         except:
             pass
 
+
+def is_connected():
+    global last_frame_get_time
+    try:
+        if ((int(time.time()) - last_frame_get_time) < 4):
+            nw = "Connected"
+        else:
+            nw = "Disconnected"
+        return nw
+    except:
+        return "Disconnected"
 
 
 th_con = Thread(target=find_client)
 th_con.start()
 th = Thread(target=get_last_frame_from_pi)
 th.start()
+th_is_con = Thread(target=is_connected)
+th_is_con.start()
+
 
 # Web Part
 # Web Part
@@ -82,19 +96,38 @@ def gen_frames():  # generate frame by frame from camera
         except:
             pass
 
-
+# для человечков
 @app.route("/")
 def index():
-    return render_template("index_js.html")
+    return render_template("index.html", iscon=is_connected())
 
+
+@app.route("/sett")
+def setts():
+    return render_template("settings.html")
+
+
+@app.route("/m_s")
+def manual_shooting():
+    return render_template("manualsh.html")
+
+
+@app.route("/about")
+def kto():
+    return render_template("about_us.html")
+
+
+# вспомогательные
 @app.route("/shooter/<w>/<h>")
 def shooter(w, h):
     print(w, h)
     return "ok"
 
+
 @app.route("/shoot")
 def shoot():
     return "ok"
+
 
 @app.route("/video")
 def video():
@@ -102,5 +135,4 @@ def video():
         return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
-
-app.run(host="0.0.0.0", debug=True, port=4123)
+app.run(host="0.0.0.0", debug=False, port=4123) ### Если вклчить отладку, то она начнёт конфликтовать с многопоточностью, и в результате мы получим нерабочую/забаганную прогу
