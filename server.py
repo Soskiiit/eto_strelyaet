@@ -87,10 +87,14 @@ app = Flask(__name__)
 
 def gen_frames():  # generate frame by frame from camera
     global last_frame
+    with open("sth_wrong.jpg", "rb") as f:
+        sth_wrong = f.read()
     while True:
         try:
-            # оно в теории работает, но на практике чёт никак
-            frame = last_frame
+            if is_connected() == "Disconnected":
+                frame = sth_wrong
+            else:
+                frame = last_frame
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
         except:
@@ -118,9 +122,9 @@ def kto():
 
 
 # вспомогательные
-@app.route("/shooter/<w>/<h>")
-def shooter(w, h):
-    print(w, h)
+@app.route("/shooter/<w>/<h>/<w_max>/<h_max>")
+def shooter(w, h, w_max, h_max):
+    print(str(w) + "/" + str(w_max) + " " + str(h) + "/" + str(h_max))
     return "ok"
 
 

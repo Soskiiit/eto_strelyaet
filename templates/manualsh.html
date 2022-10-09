@@ -373,8 +373,58 @@ input {
   </div>
   <section>
     <!-- тута всё содержимое страницы -->
-    <h1>когда-нибудь сделаю</h1>
     <h1>ну типа тыкаешь на картинку, и оно стреляет прям в эту точку</h1>
+    <div>
+        <script>
+            function defPosition(event) {
+            var x = y = 0;
+            var event = event || window.event;
+
+            // Получаем координаты клика по странице, то есть абсолютные координаты клика.
+
+            if (document.attachEvent != null) { // Internet Explorer & Opera
+                x = window.event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+                y = window.event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+            } else if (!document.attachEvent && document.addEventListener) { // Gecko
+                x = event.clientX + window.scrollX;
+                y = event.clientY + window.scrollY;
+            }
+
+            //Определяем границы объекта, в нашем случае картинки.
+
+            y0=document.getElementById("kartina").offsetTop;
+            x0=document.getElementById("kartina").offsetLeft;
+            x_max=document.getElementById("kartina").offsetWidth;
+            y_max=document.getElementById("kartina").offsetHeight;
+
+            // Пересчитываем координаты и выводим их алертом.
+
+            x = x-x0;
+            y = y-y0;
+
+            const xhr = new XMLHttpRequest(),
+            method = "GET",
+            url = "{{ url_for('shoot') }}" + "er/" + x + "/" + y + "/" + x_max + "/" + y_max;
+            xhr.open(method, url, true);
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                  // The request has been completed successfully
+                  console.log(xhr.responseText);
+                } else {
+                  // There has been an error with the request!
+                }
+              }
+            };
+            xhr.send();
+        }
+  </script>
+        <img onclick="defPosition(event);" id='kartina'
+                               style="display: block;-webkit-user-select: none;background-color: hsl(0, 0%, 25%); margin: 10px auto 20px;"
+                               width="85%" src="{{ url_for('video') }}">
+        <!--Тут блок с изображением с камеры и привязанным к нему скриптом шоп тыкать в ручном режиме -->
+    </div>
     <!-- тута всё содержимое страницы -->
   </section>
 </div>
