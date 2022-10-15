@@ -1,11 +1,7 @@
 import socket
 from flask import Flask, render_template, Response, redirect
-import requests
-from base64 import decode
-import cv2
 from threading import Thread
 import time
-import os
 
 
 ### PORTS
