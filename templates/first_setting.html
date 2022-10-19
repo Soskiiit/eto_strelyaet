@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru" >
+<head>
+  <meta charset="UTF-8">
+  <title>___</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='animations.css') }}">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='first_boot.css') }}">
+</head>
+<body class="body_visible" id="bodd">
+<script src="{{ url_for('static',filename='fst_set.js') }}"></script>
+  <div class="container">
+     <div class="card">
+       <div class="face face1">
+         <div class="content">
+             <img src="{{ url_for('static',filename='ai.png') }}" width="25%">
+         </div>
+       </div>
+       <div class="face face2">
+         <div class="content">
+           <h3>AI mode</h3>
+           <p> This mode needs initial setup, but this system may work without you. AI will detect target and aim at it.</p>
+           <a class="transition" onclick="chgcla_ai()" type="button">Select</a>
+           <script type="text/javascript">
+            function chgcla_ai() {
+                document.getElementById('bodd').className = "body_hide";
+                setTimeout(function() {
+                    window.location.href = '/fst_boot/ai';
+                }, 1000);
+            }
+            </script>
+         </div>
+       </div>
+    </div>
+    <div class="card">
+       <div class="face face1">
+         <div class="content">
+             <img src="{{ url_for('static',filename='manual.png') }}" width="25%">
+         </div>
+       </div>
+       <div class="face face2">
+         <div class="content">
+           <h3>Manual mode</h3>
+           <p> If you want aim by yourself, this is your choice. Just select it and enjoy with fastest initial setup. </p>
+           <a class="transition" onclick="chgcla_m()" type="button">Select</a>
+           <script type="text/javascript">
+            function chgcla_m() {
+                document.getElementById('bodd').className = "body_hide";
+                setTimeout(function() {
+                    window.location.href = '/fst_boot/manual';
+                }, 1000);
+            }
+            </script>
+         </div>
+       </div>
+    </div>
+    <div class="card">
+       <div class="face face1">
+         <div class="content">
+             <img src="{{ url_for('static',filename='auto.png') }}" width="25%">
+         </div>
+       </div>
+       <div class="face face2">
+         <div class="content">
+           <h3>Automaticly switch</h3>
+           <p> This mode includes AI and manual modes in one. We are recomend it. </p>
+           <a class="transition" onclick="chgcla_a()" type="button">Select</a>
+           <script type="text/javascript">
+            function chgcla_a() {
+                document.getElementById('bodd').className = "body_hide";
+                setTimeout(function() {
+                    window.location.href = '/fst_boot/auto';
+                }, 1000);
+            }
+            </script>
+         </div>
+       </div>
+    </div>
+  </div>
+</body>
+</html>

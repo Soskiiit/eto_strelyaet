@@ -5,6 +5,7 @@
   <title>___</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles.css') }}">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='animations.css') }}">
 </head>
 <body style="background-color: RGB(40, 40, 40);">
 <!-- partial:index.partial.html -->
@@ -22,14 +23,14 @@
       <li class="nav-item"><a href="/">Home</a></li>
       <li class="nav-item"><a href="sett">Settings</a></li>
       <li class="nav-item"><a href="m_s">Manual shooting</a></li>
-      <li style="text-align: right;" class="nav-item"><a href="about">About Us</a></li>
+      <li class="nav-item"><a href="about">About Us</a></li>
     </ul>
   </nav>
   </div>
   <section>
     <!-- тута всё содержимое страницы -->
-    <h1>Module aim system</h1>
-    <h1>State: {{iscon}}</h1>
+    <h1 class="animate__animated animate__fadeInUp">Module aim system</h1>
+    <h1 class="animate__animated animate__fadeInUp animate__delay-1s">State: {{iscon}}</h1>
     <!-- тута всё содержимое страницы -->
   </section>
 </div>

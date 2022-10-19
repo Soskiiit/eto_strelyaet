@@ -102,6 +102,26 @@ def index():
     return render_template("index.html", iscon=is_connected())
 
 
+@app.route("/fst_boot")
+def first_stp():
+    return render_template("first_setting.html", iscon=is_connected())
+
+
+@app.route("/fst_boot/ai")
+def first_ai():
+    return render_template("first_ai.html", iscon=is_connected())
+
+
+@app.route("/fst_boot/auto")
+def first_auto():
+    return render_template("first_auto.html", iscon=is_connected())
+
+
+@app.route("/fst_boot/manual")
+def first_manual():
+    return render_template("first_manual.html", iscon=is_connected())
+
+
 @app.route("/sett")
 def setts():
     return render_template("settings.html")
