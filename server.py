@@ -1,7 +1,8 @@
-import socket
 from flask import Flask, render_template, Response, redirect
 from threading import Thread
+import socket
 import time
+import os
 
 
 ### PORTS
@@ -97,9 +98,18 @@ def gen_frames():  # generate frame by frame from camera
             pass
 
 # для человечков
+
+@app.errorhandler(404)
+def error_404(e):
+    return render_template("err404.html")
+
+
 @app.route("/")
 def index():
-    return render_template("index.html", iscon=is_connected())
+    if need_setup:
+        return redirect("/fst_boot")
+    else:
+        return render_template("index.html", iscon=is_connected())
 
 
 @app.route("/fst_boot")
@@ -154,5 +164,13 @@ def video():
     while True:
         return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+
+if os.path.exists("cfg.txt"):
+    with open("cfg.txt") as f:
+        cfg = f.read().split()
+        c_mode = cfg[0]
+        need_setup = False
+else:
+    need_setup = False ### В самом конце замени на True
 
 app.run(host="0.0.0.0", debug=False, port=4123) ### Если вклчить отладку, то она начнёт конфликтовать с многопоточностью, и в результате мы получим нерабочую/забаганную прогу

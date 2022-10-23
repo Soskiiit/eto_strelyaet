@@ -29,7 +29,7 @@
   </div>
   <section>
     <!-- тута всё содержимое страницы -->
-    <h1 class="animate__animated animate__fadeInUp">страничка по приколу</h1>
+    <h1 id="mcb" class="animate__animated animate__fadeInUp">страничка по приколу</h1>
     <!-- тута всё содержимое страницы -->
   </section>
 </div>
@@ -40,6 +40,13 @@
      $(".nav").toggleClass("mobile-nav");
      $(this).toggleClass("is-active");
   });
+  </script>
+  <script>
+    window.onload = function asd() {
+        setTimeout(function f() {
+            document.getElementById('mcb').className = "";
+        }, 1000)
+    }
   </script>
 </body>
 </html>

@@ -7,10 +7,19 @@
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='animations.css') }}">
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='first_boot.css') }}">
 </head>
-<body class="body_hide" id="bodd">
+<body id="bodd" class="body_hide">
+  <h1 style="color: white;" class="animate__animated animate__fadeOutDown animate__delay-1s">You don't need to set it up.  Just enjoy</h1>
+  <h1 style="opacity: 0;">______</h1>
 <script type="text/javascript">
-window.onload = function() {document.getElementById('bodd').className = "body_visible";}
+            window.onload = function chgcla_ai() {
+                document.getElementById('bodd').className = "body_visible";
+                setTimeout(function f() {
+                    document.getElementById('bodd').className = "body_hide_d";
+                    setTimeout(function() {
+                    window.location.href = '/';
+                    }, 1500);
+                }, 3000);
+            }
 </script>
-<h1 style="color: white;">The're will be a page with settings for manual mode.</h1>
 </body>
 </html>

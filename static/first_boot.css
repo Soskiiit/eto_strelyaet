@@ -136,7 +136,15 @@ body{
 	opacity: 0;
 	transition: .9s opacity ease-in-out;
 }
+
 .body_visible {
 	opacity: 1;
 	transition: .9s opacity ease-in-out;
+}
+
+.body_hide_d {
+	opacity: 0;
+	background-color: RGB(40, 40, 40);
+	transition: .9s opacity ease-in-out;
+	transition: .9s background-color ease-in-out;
 }

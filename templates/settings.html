@@ -27,10 +27,25 @@
     </ul>
   </nav>
   </div>
-  <section>
+  <section id="sec" class="body_hide">
     <!-- тута всё содержимое страницы -->
-    <h1 class="animate__animated animate__fadeInUp">*здесь могла быть ваша настройка*</h1>
-    <!-- тута всё содержимое страницы -->
+    <h1 id="mcb">*здесь могла быть ваша настройка*</h1>
+    <h1>
+        Statistics
+    </h1>
+      <div class="pod_t">
+          <div class="tiles">
+              <div class="tile-green">
+                  <h2 class="stat_heading">Ram usage</h2>
+              </div>
+              <div class="tile-blue">
+                  <h2 class="stat_heading">Memory usage</h2>
+              </div>
+              <div class="tile-yell">
+                  <h2 class="stat_heading">CPU Temp</h2>
+              </div>
+          </div>
+      </div>
   </section>
 </div>
 <!-- partial -->
@@ -40,6 +55,11 @@
      $(".nav").toggleClass("mobile-nav");
      $(this).toggleClass("is-active");
   });
+  </script>
+  <script>
+    window.onload = function asd() {
+            document.getElementById('sec').className = "body_visible";
+        }
   </script>
 </body>
 </html>

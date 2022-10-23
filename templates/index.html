@@ -29,8 +29,8 @@
   </div>
   <section>
     <!-- тута всё содержимое страницы -->
-    <h1 class="animate__animated animate__fadeInUp">Module aim system</h1>
-    <h1 class="animate__animated animate__fadeInUp animate__delay-1s">State: {{iscon}}</h1>
+    <h1 id="mcb" class="animate__animated animate__fadeInUp">Module aim system</h1>
+    <h1 id="mcbb" class="animate__animated animate__fadeInUp animate__delay-1s">State: {{iscon}}</h1>
     <!-- тута всё содержимое страницы -->
   </section>
 </div>
@@ -42,5 +42,13 @@
      $(this).toggleClass("is-active");
   });
   </script>
+<script>
+window.onload = function asd() {
+    setTimeout(function f() {
+        document.getElementById('mcb').className = "";
+        document.getElementById('mcbb').className = "";
+    }, 2000)
+}
+</script>
 </body>
 </html>
