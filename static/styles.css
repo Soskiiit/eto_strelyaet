@@ -363,9 +363,11 @@ input {
 }
 
 .pod_t {
-    margin: 10px;
+    margin: -60px 10px;
     border-radius: 25px;
     background-color: #444444;
+    position: relative;
+    z-index: 1000;
 }
 
 .tiles {
@@ -434,4 +436,12 @@ input {
 .stat_heading {
     margin: 25px 20px;
     text-align: left;
+}
+
+.outdated {
+    margin: 10px;
+    border-radius: 25px;
+    background-color: #333333;
+    height: 100px;
+    padding: 1px;
 }

@@ -139,12 +139,27 @@ def setts():
     st_total_ram = 0.94
     st_used_mem = 9.6
     st_total_mem = 14.4
+    st_actually = (is_connected() == "Connected")
     if st_cpu_temp > 85:
-        return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
-                               total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp, temp_c="rgb(240, 100, 100)")
+        if st_actually:
+            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                    total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
+                                    temp_c="rgb(240, 100, 100)",
+                                    is_act="")
+        else:
+            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                   total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
+                                   temp_c="rgb(240, 100, 100)",
+                                   is_act="outdated")
     else:
-        return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
-                               total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white")
+        if st_actually:
+            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                   total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
+                                   is_act="")
+        else:
+            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                   total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
+                                   is_act="outdated")
 
 
 @app.route("/m_s")
