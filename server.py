@@ -134,7 +134,17 @@ def first_manual():
 
 @app.route("/sett")
 def setts():
-    return render_template("settings.html")
+    st_cpu_temp = 52
+    st_used_ram = 0.56
+    st_total_ram = 0.94
+    st_used_mem = 9.6
+    st_total_mem = 14.4
+    if st_cpu_temp > 85:
+        return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                               total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp, temp_c="rgb(240, 100, 100)")
+    else:
+        return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                               total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white")
 
 
 @app.route("/m_s")
