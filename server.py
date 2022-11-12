@@ -1,4 +1,5 @@
-from flask import Flask, render_template, Response, redirect
+from flask import Flask, render_template, Response, redirect, request
+from werkzeug.utils import secure_filename
 from threading import Thread
 import socket
 import time
@@ -8,6 +9,7 @@ import os
 ### PORTS
 # 5120 - initializing
 # 5220 - sharing cords between pi and server
+# 5222 - sharing stats between pi and server
 # 5320 - sharing images between pi and server
 # 4123 - web server for user
 
@@ -55,6 +57,24 @@ def get_last_frame_from_pi():
             pass
 
 
+def get_stats_from_pi():
+    global stats_conf
+    sock = socket.socket()
+    sock.bind(('', 5121))
+    sock.listen(1)
+    while True:
+        try:
+            conn, addr = sock.accept()
+            while True:
+                data = conn.recv(1024).decode()
+                if not data:
+                    break
+                elif data[0] == "s":
+                    stats_conf = data.split("_")
+            conn.close()
+        except:
+            pass
+
 def is_connected():
     global last_frame_get_time
     try:
@@ -69,10 +89,10 @@ def is_connected():
 
 th_con = Thread(target=find_client)
 th_con.start()
+th_stats = Thread(target=get_stats_from_pi)
+th_stats.start()
 th = Thread(target=get_last_frame_from_pi)
 th.start()
-th_is_con = Thread(target=is_connected)
-th_is_con.start()
 
 
 # Web Part
@@ -96,6 +116,11 @@ def gen_frames():  # generate frame by frame from camera
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')  # concat frame one by one and show result
         except:
             pass
+
+
+@app.route("/send_file", methods=['POST'])
+def send_file():
+    print("tipa prinyal")
 
 # для человечков
 
@@ -132,13 +157,38 @@ def first_manual():
     return render_template("first_manual.html", iscon=is_connected())
 
 
+@app.route("/swmode/auto")
+def swm_auto():
+    print("new mode is auto")
+    return redirect("/sett")
+
+@app.route("/swmode/ai")
+def swm_ai():
+    print("new mode is ai")
+    return redirect("/sett")
+
+@app.route("/swmode/manual")
+def swm_manual():
+    print("new mode is manual")
+    return redirect("/sett")
+
+
 @app.route("/sett")
 def setts():
-    st_cpu_temp = 52
-    st_used_ram = 0.56
-    st_total_ram = 0.94
-    st_used_mem = 9.6
-    st_total_mem = 14.4
+    global stats_conf
+    try:
+        print(stats_conf)
+        st_cpu_temp = int(stats_conf[1])
+        st_used_ram = float(stats_conf[2])
+        st_total_ram = float(stats_conf[3])
+        st_used_mem = float(stats_conf[4])
+        st_total_mem = float(stats_conf[5])
+    except:
+        st_cpu_temp = 52
+        st_used_ram = 0.56
+        st_total_ram = 0.94
+        st_used_mem = 9.6
+        st_total_mem = 14.4
     st_actually = (is_connected() == "Connected")
     if st_cpu_temp > 85:
         if st_actually:

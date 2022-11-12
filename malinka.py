@@ -1,15 +1,16 @@
 import os
 import platform
-import threading
+from threading import Thread
 import socket
 from datetime import datetime
 import cv2
 import time
+import psutil
 
 
 ### PORTS
 # 5120 - initializing
-# 5220 - sharing cords between pi and server
+# 5220 - sharing cords and other data between pi and server
 # 5320 - sharing images between pi and server
 # 4123 - web server for user
 
@@ -74,10 +75,33 @@ def send_photos(last_frame):
     global host_ip
     sock = socket.socket()
     sock.connect((host_ip, 5320))
-    print(f"[{time.time()}] I sent frame")
     sock.send(last_frame)
     sock.send(b"end")
     sock.close()
+    # print(f"[{time.time()}] I sent frame")
+
+def send_stats():
+    while True:
+        s_disk_total = round((psutil.disk_usage("/").total / 1073741824), 1) # get statistics and convert it to gb
+        s_disk_used = round((psutil.disk_usage("/").used / 1073741824), 1) # get statistics and convert it to gb
+        s_ram_total = round((psutil.virtual_memory().total / 1073741824), 1) # get statistics and convert it to gb
+        s_ram_used = round((psutil.virtual_memory().used / 1073741824), 1) # get statistics and convert it to gb
+        try:
+            s_cpu_temp = int(psutil.sensors_temperatures()["coretemp"][0].current)
+            # need for tests because psutil.sensors_... works only on linux
+        except:
+            s_cpu_temp = 50
+        try:
+            sock = socket.socket()
+            sock.connect((host_ip, 5121))
+            stats = "s_" + str(s_cpu_temp) + "_" + str(s_ram_used) + "_" + str(s_ram_total) + "_" + str(s_disk_used) + "_" + str(s_disk_total)
+            stats_bytes = stats.encode(encoding = 'UTF-8')
+            sock.send(stats_bytes)
+            sock.close()
+        except Exception as ex:
+            print(ex)
+        time.sleep(1)
+
 
 
 host_ip = None
@@ -99,7 +123,7 @@ while host_ip == None:
     t1 = datetime.now()
     print("Scanning in Progress")
     for ip in range(0, 80):
-        potoc = threading.Thread(target=scan_Ip, args=[ip])
+        potoc = Thread(target=scan_Ip, args=[ip])
         potoc.start()
     potoc.join()
     t2 = datetime.now()
@@ -111,4 +135,9 @@ while host_ip == None:
         print("host ip: " + host_ip)
     else:
         print("retrying to search host")
+
+
+th = Thread(target=send_stats)
+th.start()
+send_stats()
 make_photos()

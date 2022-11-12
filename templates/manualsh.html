@@ -63,7 +63,7 @@
             url = "{{ url_for('shoot') }}" + "er/" + x + "/" + y + "/" + x_max + "/" + y_max;
             xhr.open(method, url, true);
             xhr.onreadystatechange = function () {
-              if(xhr.readyState === XMLHttpRequest.DONE) {
+              if(<xhr class="readyS"></xhr>tate === XMLHttpRequest.DONE) {
                 var status = xhr.status;
                 if (status === 0 || (status >= 200 && status < 400)) {
                   // The request has been completed successfully
