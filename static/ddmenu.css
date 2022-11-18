@@ -17,7 +17,7 @@ dropdown{
 }
 dropdown label, dropdown ul li{
   display: block;
-  width: 200px;
+  width: 265px;
   background: rgb(70, 70, 70);
   padding: 15px 20px;
 }

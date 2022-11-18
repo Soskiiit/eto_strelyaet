@@ -32,15 +32,7 @@
     <section id="sec" class="body_hide">
         <!-- тута всё содержимое страницы -->
         <h1 id="mcb">*здесь могла быть ваша настройка*</h1>
-        <dropdown>
-            <input id="toggle2" type="checkbox">
-            <label for="toggle2" class="animate">Select device mode<i class="fa fa-bars float-right"></i></label>
-            <ul class="animate">
-                <a style="text-decoration: none; color: white;" href="/swmode/auto"><li class="animate">Auto<i class="fa fa-code float-right"></i></li></a>
-                <a style="text-decoration: none; color: white;" href="/swmode/ai"><li class="animate" href="/swmode/ai">AI<i class="fa fa-arrows-alt float-right"></i></li></a>
-                <a style="text-decoration: none; color: white;" href="/swmode/manual"><li class="animate" href="/swmode/manual">Manual<i class="fa fa-cog float-right"></i></li></a>
-            </ul>
-        </dropdown>
+        <div class="tiles">
             <div class="upload" name="upload">
               <div class="upload__info">
                 <span class="upload__filename" id="noFile">Select model</span>
@@ -79,6 +71,16 @@
 .file-upload .file-select.file-select-disabled:hover .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
                 </style>
             </div>
+            <dropdown>
+            <input id="toggle2" type="checkbox">
+            <label for="toggle2" class="animate">Select device mode<i class="fa fa-bars float-right"></i></label>
+            <ul class="animate">
+                <a style="text-decoration: none; color: white;" href="/swmode/auto"><li class="animate">Auto<i class="fa fa-code float-right"></i></li></a>
+                <a style="text-decoration: none; color: white;" href="/swmode/ai"><li class="animate" href="/swmode/ai">AI<i class="fa fa-arrows-alt float-right"></i></li></a>
+                <a style="text-decoration: none; color: white;" href="/swmode/manual"><li class="animate" href="/swmode/manual">Manual<i class="fa fa-cog float-right"></i></li></a>
+            </ul>
+        </dropdown>
+        </div>
         <!-- Тута начинается блок со статистикой -->
         <h1>
             Statistics

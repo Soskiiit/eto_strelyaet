@@ -1,8 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
 
 .upload {
-    position: absolute;
-    margin: -212px 320px;
+    position: relative;
+    margin: 20px 50px;
     --btn-color: #3bafda;
     --progress-color: #2d334c;
     --ease-in-out-quartic: cubic-bezier(0.77, 0, 0.175, 1);
