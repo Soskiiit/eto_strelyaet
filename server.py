@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, redirect, request
+from flask import Flask, render_template, Response, redirect, request, make_response
 from werkzeug.utils import secure_filename
 from threading import Thread
 import socket
@@ -210,6 +210,34 @@ def setts():
             return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
                                    total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
                                    is_act="outdated")
+
+
+@app.route("/sett/ru")
+def set_ru_lng():
+    res = make_response(setts())
+    res.set_cookie('language', 'ru', max_age=315360000)
+    return res
+
+
+@app.route("/sett/en")
+def set_en_lng():
+    res = make_response(setts())
+    res.set_cookie('language', 'en', max_age=315360000)
+    return res
+
+
+@app.route("/sett/br_ru")
+def set_br_ru_lng():
+    res = make_response(setts())
+    res.set_cookie('language', 'br_ru', max_age=315360000)
+    return res
+
+
+@app.route("/sett/br_en")
+def set_br_en_lng():
+    res = make_response(setts())
+    res.set_cookie('language', 'br_en', max_age=315360000)
+    return res
 
 
 @app.route("/m_s")

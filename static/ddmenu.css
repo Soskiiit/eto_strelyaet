@@ -19,19 +19,19 @@ dropdown label, dropdown ul li{
   display: block;
   width: 265px;
   background: rgb(70, 70, 70);
-  padding: 15px 20px;
+  padding: 18px 20px;
 }
 dropdown label:hover, dropdown ul li:hover{
-  background: #1ABC9C;
+  background: #40aae7;
   color: white;
   cursor: pointer;
 }
 dropdown label{
-  color: #1ABC9C;
-  border-left: 4px solid #1ABC9C;
+  color: #40aae7;
+  border-left: 4px solid #40aae7;
   border-radius: 0 5px 5px 0;
   position: relative;
-  z-index: 2;
+  z-index: 0;
 }
 dropdown input{
   display: none;
@@ -44,7 +44,7 @@ dropdown input ~ ul{
   z-index: 1;
 }
 dropdown input:checked + label{
-  background: #1ABC9C;
+  background: #40aae7;
   color: white;
 }
 

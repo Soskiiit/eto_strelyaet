@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='ddmenu.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='upload_but.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename='dd_lng.css') }}">
 </head>
 <body style="background-color: RGB(40, 40, 40);">
 <!-- partial:index.partial.html -->
@@ -33,6 +34,16 @@
         <!-- тута всё содержимое страницы -->
         <h1 id="mcb">*здесь могла быть ваша настройка*</h1>
         <div class="tiles">
+            <div style="position:relative; z-index: 10;"><div class="container_lng">
+              <button class="btn_lng"><span>Language Settings</span><img style="width: 25px" src="{{ url_for('static',filename='world.png') }}">
+                <ul class="dropdown_lng">
+                  <li class="active"><a href="/sett/en">English</a></li>
+                  <li><a href="/sett/ru">Русский</a></li>
+                  <li><a href="/sett/br_en">⠃⠗⠁⠊⠇_⠑⠝</a></li>
+                  <li><a href="/sett/br_ru">⠃⠗⠁⠯⠇⠾_⠗⠥</a></li>
+                </ul>
+              </button>
+            </div></div>
             <div class="upload" name="upload">
               <div class="upload__info">
                 <span class="upload__filename" id="noFile">Select model</span>

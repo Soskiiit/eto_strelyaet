@@ -13,6 +13,7 @@
     transform: rotate(0);
     width: 263px;
     color: white;
+    max-height: 50px;
 }
 
 .upload__info {
