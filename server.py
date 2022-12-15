@@ -9,12 +9,13 @@ import os
 ### PORTS
 # 5120 - initializing
 # 5220 - sharing cords between pi and server
-# 5222 - sharing stats between pi and server
+# 5121 - sharing stats between pi and server
 # 5320 - sharing images between pi and server
 # 4123 - web server for user
 
 
 def find_client():
+    global connected_ip
     sock = socket.socket()
     sock.bind(('', 5120))
     sock.listen(1)
@@ -25,6 +26,7 @@ def find_client():
             data = conn.recv(1024)
             if data == b"legd":
                 conn.send(b'lfga')
+                connected_ip = addr[0]
             else:
                 conn.send(b'x')
             if not data:
@@ -75,6 +77,7 @@ def get_stats_from_pi():
         except:
             pass
 
+
 def is_connected():
     global last_frame_get_time
     try:
@@ -85,6 +88,17 @@ def is_connected():
         return nw
     except:
         return "Disconnected"
+
+
+def send_cords_to_pi(cords):
+    global connected_ip
+    try:
+        sock = socket.socket()
+        sock.connect((connected_ip, 5220))
+        sock.send(cords.encode())
+        sock.close()
+    except Exception as ex:
+        print(ex)
 
 
 th_con = Thread(target=find_client)
@@ -254,6 +268,7 @@ def kto():
 @app.route("/shooter/<w>/<h>/<w_max>/<h_max>")
 def shooter(w, h, w_max, h_max):
     print(str(w) + "/" + str(w_max) + " " + str(h) + "/" + str(h_max))
+    send_cords_to_pi("c_" + str(w) + "_" + str(w_max) + "_" + str(h) + "_" + str(h_max))
     return "ok"
 
 
@@ -270,7 +285,7 @@ def video():
 
 if os.path.exists("cfg.txt"):
     with open("cfg.txt") as f:
-        cfg = f.read().split()
+        cfg = f.read()
         c_mode = cfg[0]
         need_setup = False
 else:

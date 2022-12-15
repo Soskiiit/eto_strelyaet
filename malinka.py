@@ -10,7 +10,8 @@ import psutil
 
 ### PORTS
 # 5120 - initializing
-# 5220 - sharing cords and other data between pi and server
+# 5220 - sharing cords between pi and server
+# 5121 - sharing stats between pi and server
 # 5320 - sharing images between pi and server
 # 4123 - web server for user
 
@@ -57,14 +58,10 @@ def aim_n_shoot(x, y):
 
 
 def make_photos():
-    cap = cv2.VideoCapture('test.mp4')
-    i = 0
-    while (cap.isOpened()):
+    cap = cv2.VideoCapture(0)
+    while True:
         ret, frame = cap.read()
-        if ret == False:
-            break
         last_frame = cv2.imencode('.jpg', frame)[1].tobytes()
-        i += 1
         try:
             send_photos(last_frame)
         except:
@@ -103,6 +100,25 @@ def send_stats():
         time.sleep(1)
 
 
+def get_cords():
+    global cords
+    sock = socket.socket()
+    sock.bind(('', 5220))
+    sock.listen(1)
+    while True:
+        try:
+            conn, addr = sock.accept()
+            while True:
+                data = conn.recv(1024).decode()
+                if not data:
+                    break
+                elif data[0] == "c":
+                    cords = [int(data.split("_")[1]) / int(data.split("_")[2]), int(data.split("_")[3]) / int(data.split("_")[4])]
+            conn.close()
+            print(cords)
+        except:
+            pass
+
 
 host_ip = None
 while host_ip == None:
@@ -122,7 +138,7 @@ while host_ip == None:
         ping_com = "ping -c 1 "
     t1 = datetime.now()
     print("Scanning in Progress")
-    for ip in range(0, 80):
+    for ip in range(0, 181):
         potoc = Thread(target=scan_Ip, args=[ip])
         potoc.start()
     potoc.join()
@@ -139,5 +155,7 @@ while host_ip == None:
 
 th = Thread(target=send_stats)
 th.start()
-send_stats()
-make_photos()
+th_capture = Thread(target=make_photos)
+th_capture.start()
+th_cords = Thread(target=get_cords)
+th_cords.start()
