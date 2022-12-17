@@ -72,6 +72,7 @@ def make_photos():
             print("Time for sending:", datetime.now() - st)
         except:
             pass
+        time.sleep(0.02)
 
 
 def send_photos(last_frame):
