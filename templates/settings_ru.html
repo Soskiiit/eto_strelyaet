@@ -24,9 +24,9 @@
             </div>
             <ul class="nav no-search">
                 <li class="nav-item"><a href="/">Главная страница</a></li>
-                <li class="nav-item"><a href="/sett">Настройки</a></li>
+                <li style="margin: auto 30px" class="nav-item"><a href="/sett">Настройки</a></li>
                 <li class="nav-item"><a href="/m_s">Ручное наведение</a></li>
-                <li class="nav-item"><a href="/about">О нас</a></li>
+                <li style="margin: auto 20px" class="nav-item"><a href="/about">О нас</a></li>
             </ul>
         </nav>
     </div>
@@ -46,13 +46,13 @@
             </div></div>
             <div class="upload" name="upload">
               <div class="upload__info">
-                <span class="upload__filename" id="noFile">Select model</span>
+                <span class="upload__filename" id="noFile">Выберите файл</span>
               </div>
               <input type="file" name="chooseFile" id="chooseFile">
-              <button class="upload__button" onclick="sndf();">
-                <div class="upload__button__text">Upload</div>
+              <button style="margin: 0px 10px 0px 155px;" class="upload__button" onclick="sndf();">
+                <div class="upload__button__text">Отправить</div>
               </button>
-              <div class="upload__hint">Uploading...</div>
+              <div class="upload__hint">Загрузка...</div>
               <div class="upload__progress">
                 <svg
                   width="16"
@@ -64,7 +64,7 @@
                 >
                   <polyline points="1 5.5 5 9.5 12 1.5"></polyline>
                 </svg>
-                Completed
+                Успешно
               </div>
               <style>
                     .file-upload{display:block;text-align:center;font-family: Helvetica, Arial, sans-serif;font-size: 12px;}
@@ -84,7 +84,7 @@
             </div>
             <dropdown>
             <input id="toggle2" type="checkbox">
-            <label for="toggle2" class="animate">Select device mode<i class="fa fa-bars float-right"></i></label>
+            <label for="toggle2" class="animate">Выберите режим работы<i class="fa fa-bars float-right"></i></label>
             <ul class="animate">
                 <a style="text-decoration: none; color: white;" href="/swmode/auto"><li class="animate">Auto<i class="fa fa-code float-right"></i></li></a>
                 <a style="text-decoration: none; color: white;" href="/swmode/ai"><li class="animate" href="/swmode/ai">AI<i class="fa fa-arrows-alt float-right"></i></li></a>
