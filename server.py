@@ -1,5 +1,6 @@
 from flask import Flask, render_template, Response, redirect, request, make_response
 from werkzeug.utils import secure_filename
+import cv2
 from threading import Thread
 import socket
 import time
