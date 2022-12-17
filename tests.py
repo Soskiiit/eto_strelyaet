@@ -25,5 +25,5 @@ while duty1 <= 17:
 servo1.ChangeDutyCycle(2)
 time.sleep(1)
 servo1.ChangeDutyCycle(0)
-Servo1.stop()
+Servo.stop()
 GPIO.cleanup()
