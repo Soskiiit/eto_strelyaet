@@ -72,11 +72,13 @@ def make_photos():
 
 def send_photos(last_frame):
     global host_ip
+    st = datetime.now()
     sock = socket.socket()
     sock.connect((host_ip, 5320))
     sock.send(last_frame)
     sock.send(b"end")
     sock.close()
+    print("time to sending:", datetime.now() - st)
     # print(f"[{time.time()}] I sent frame")
 
 def send_stats():
