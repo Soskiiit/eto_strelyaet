@@ -60,10 +60,16 @@ def aim_n_shoot(x, y):
 def make_photos():
     cap = cv2.VideoCapture(0)
     while True:
+        st = datetime.now()
         ret, frame = cap.read()
+        print("Time for capture:", datetime.now() - st)
+        st = datetime.now()
         last_frame = cv2.imencode('.jpg', frame)[1].tobytes()
+        print("Time for encoding:", datetime.now() - st)
         try:
+            st = datetime.now()
             send_photos(last_frame)
+            print("Time for sending:", datetime.now() - st)
         except:
             pass
 
