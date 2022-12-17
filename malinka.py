@@ -61,7 +61,9 @@ def make_photos():
     cap = cv2.VideoCapture(0)
     while True:
         ret, frame = cap.read()
+        st = datetime.now()
         last_frame = cv2.imencode('.jpg', frame)[1].tobytes()
+        print("Time to encoding:", datetime.now() - st)
         try:
             send_photos(last_frame)
         except:
