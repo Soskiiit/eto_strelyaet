@@ -17,13 +17,13 @@ servo.ChangeDutyCycle(0)
 servo1 = GPIO.PWM(40,50)
 servo1.start(0)
 time.sleep(1)
-duty = 2
-while duty <= 17:
-    servo1.ChangeDutyCycle(duty)
+duty1 = 2
+while duty1 <= 17:
+    servo1.ChangeDutyCycle(duty1)
     time.sleep(1)
-    duty = duty + 1
+    duty1 = duty1 + 1
 servo1.ChangeDutyCycle(2)
 time.sleep(1)
 servo1.ChangeDutyCycle(0)
-Servo1.stop()
+Servo.stop()
 GPIO.cleanup()
