@@ -84,7 +84,7 @@ def send_stats():
         s_ram_total = round((psutil.virtual_memory().total / 1073741824), 1) # get statistics and convert it to gb
         s_ram_used = round((psutil.virtual_memory().used / 1073741824), 1) # get statistics and convert it to gb
         try:
-            s_cpu_temp = int(psutil.sensors_temperatures()["coretemp"][0].current)
+            s_cpu_temp = int(psutil.sensors_temperatures()["cpu_thermal"][0].current)
             # need for tests because psutil.sensors_... works only on linux
         except:
             s_cpu_temp = 50
