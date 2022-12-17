@@ -61,9 +61,7 @@ def make_photos():
     cap = cv2.VideoCapture(0)
     while True:
         ret, frame = cap.read()
-        st = datetime.now()
         last_frame = cv2.imencode('.jpg', frame)[1].tobytes()
-        print("Time to encoding:", datetime.now() - st)
         try:
             send_photos(last_frame)
         except:
@@ -72,13 +70,11 @@ def make_photos():
 
 def send_photos(last_frame):
     global host_ip
-    st = datetime.now()
     sock = socket.socket()
     sock.connect((host_ip, 5320))
     sock.send(last_frame)
     sock.send(b"end")
     sock.close()
-    print("time to sending:", datetime.now() - st)
     # print(f"[{time.time()}] I sent frame")
 
 def send_stats():
