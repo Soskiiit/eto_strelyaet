@@ -205,52 +205,78 @@ def setts():
         st_used_mem = 9.6
         st_total_mem = 14.4
     st_actually = (is_connected() == "Connected")
-    if st_cpu_temp > 85:
-        if st_actually:
-            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
-                                    total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
-                                    temp_c="rgb(240, 100, 100)",
-                                    is_act="")
+    if not request.cookies.get('language') or request.cookies.get('language') == "en":
+        if st_cpu_temp > 85:
+            if st_actually:
+                return render_template("settings_en.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                        total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
+                                        temp_c="rgb(240, 100, 100)",
+                                        is_act="")
+            else:
+                return render_template("settings_en.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                       total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
+                                       temp_c="rgb(240, 100, 100)",
+                                       is_act="outdated")
         else:
-            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
-                                   total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
-                                   temp_c="rgb(240, 100, 100)",
-                                   is_act="outdated")
+            if st_actually:
+                return render_template("settings_en.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                       total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
+                                       is_act="")
+            else:
+                return render_template("settings_en.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                       total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
+                                       is_act="outdated")
     else:
-        if st_actually:
-            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
-                                   total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
-                                   is_act="")
+        if st_cpu_temp > 85:
+            if st_actually:
+                return render_template("settings_ru.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                        total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
+                                        temp_c="rgb(240, 100, 100)",
+                                        is_act="")
+            else:
+                return render_template("settings_ru.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                       total_mem=st_total_mem, cpu_temp=85, cpu_d_temp=st_cpu_temp,
+                                       temp_c="rgb(240, 100, 100)",
+                                       is_act="outdated")
         else:
-            return render_template("settings.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
-                                   total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
-                                   is_act="outdated")
+            if st_actually:
+                return render_template("settings_ru.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                       total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
+                                       is_act="")
+            else:
+                return render_template("settings_ru.html", used_ram=st_used_ram, total_ram=st_total_ram, used_mem=st_used_mem,
+                                       total_mem=st_total_mem, cpu_temp=st_cpu_temp, cpu_d_temp=st_cpu_temp, temp_c="white",
+                                       is_act="outdated")
+
+
+def kostil_kirila():
+    return redirect("/sett")
 
 
 @app.route("/sett/ru")
 def set_ru_lng():
-    res = make_response(setts())
+    res = make_response(kostil_kirila())
     res.set_cookie('language', 'ru', max_age=315360000)
     return res
 
 
 @app.route("/sett/en")
 def set_en_lng():
-    res = make_response(setts())
+    res = make_response(kostil_kirila())
     res.set_cookie('language', 'en', max_age=315360000)
     return res
 
 
 @app.route("/sett/br_ru")
 def set_br_ru_lng():
-    res = make_response(setts())
+    res = make_response(kostil_kirila())
     res.set_cookie('language', 'br_ru', max_age=315360000)
     return res
 
 
 @app.route("/sett/br_en")
 def set_br_en_lng():
-    res = make_response(setts())
+    res = make_response(kostil_kirila())
     res.set_cookie('language', 'br_en', max_age=315360000)
     return res
 

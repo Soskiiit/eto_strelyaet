@@ -23,22 +23,22 @@
                 <span class="bar"></span>
             </div>
             <ul class="nav no-search">
-                <li class="nav-item"><a href="/">Home</a></li>
-                <li class="nav-item"><a href="/sett">Settings</a></li>
-                <li class="nav-item"><a href="/m_s">Manual shooting</a></li>
-                <li class="nav-item"><a href="/about">About Us</a></li>
+                <li class="nav-item"><a href="/">Главная страница</a></li>
+                <li class="nav-item"><a href="/sett">Настройки</a></li>
+                <li class="nav-item"><a href="/m_s">Ручное наведение</a></li>
+                <li class="nav-item"><a href="/about">О нас</a></li>
             </ul>
         </nav>
     </div>
     <section id="sec" class="body_hide">
         <!-- тута всё содержимое страницы -->
-        <h1 id="mcb">*здесь могла быть ваша настройка*</h1>
+        <h1 id="mcb">Настройки</h1>
         <div class="tiles">
             <div style="position:relative; z-index: 10;"><div class="container_lng">
               <button class="btn_lng"><span>Language Settings</span><img style="width: 25px" src="{{ url_for('static',filename='world.png') }}">
                 <ul class="dropdown_lng">
-                  <li class="active"><a href="/sett/en">English</a></li>
-                  <li><a href="/sett/ru">Русский</a></li>
+                  <li><a href="/sett/en">English</a></li>
+                  <li class="active"><a href="/sett/ru">Русский</a></li>
                   <li><a href="/sett/br_en">⠃⠗⠁⠊⠇_⠑⠝</a></li>
                   <li><a href="/sett/br_ru">⠃⠗⠁⠯⠇⠾_⠗⠥</a></li>
                 </ul>
@@ -94,7 +94,7 @@
         </div>
         <!-- Тута начинается блок со статистикой -->
         <h1>
-            Statistics
+            Статистика
         </h1>
         <br>
         <br>
@@ -142,7 +142,7 @@
             width: 55px;
             border-radius: 15px;
             background-color: {{ temp_c }};
-            margin: calc(-55px + 160px * (1 - {{ cpu_temp / 85 }})) 220px;
+            margin: calc(-88px + 160px * (1 - {{ cpu_temp / 85 }})) 220px;
             position: absolute;
             z-index: 999;
             transition: all 1.3s ease;
@@ -152,12 +152,12 @@
         </style>
         <div class="{{ is_act }}">
             <img src="{{url_for('static',filename='warning.png')}}" style="margin: 7px 20px; width: 32px;">
-            <h2 style="color: white; margin: -40px 60px; text-align: left;">Data may be outdated.</h2>
+            <h2 style="color: white; margin: -40px 60px; text-align: left;">Данные могут быть устаревшими</h2>
         </div>
         <div class="pod_t">
             <div class="tiles">
                 <div class="tile-green">
-                    <h2 class="stat_heading">Ram usage</h2>
+                    <h2 class="stat_heading">Потребление ОЗУ</h2>
                     <h4 style="color:black; margin: 80px 20px; position: absolute;">Used {{used_ram}} of
                         {{total_ram}}GB</h4>
                     <p class="stat_bar"></p>
@@ -166,7 +166,7 @@
                         total_ram)*100)|int }}%</p>
                 </div>
                 <div class="tile-blue">
-                    <h2 class="stat_heading">Memory usage</h2>
+                    <h2 class="stat_heading">Потребление ПЗУ</h2>
                     <h4 style="color:black; margin: 80px 20px; position: absolute;">Used {{used_mem}} of
                         {{total_mem}}GB</h4>
                     <p class="stat_bar"></p>
@@ -175,10 +175,10 @@
                         total_mem)*100)|int }}%</p>
                 </div>
                 <div class="tile-yell">
-                    <h2 class="stat_heading">CPU Temp</h2>
-                    <p class="stat_bar"></p>
+                    <h2 class="stat_heading">Температура <br>процессора</h2>
+                    <p style="margin: -88px 220px" class="stat_bar"></p>
                     <p id="tempb" class="zero_bar"></p>
-                    <p style="color: black; margin: 75px 238px; position: absolute; z-index: 1000;">{{
+                    <p style="color: black; margin: 45px 238px; position: absolute; z-index: 1000;">{{
                         (cpu_d_temp)|int }}°</p>
                 </div>
             </div>
