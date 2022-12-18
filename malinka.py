@@ -136,6 +136,7 @@ def povorot(cords):
     y = cords[1] * 10
     servo.ChangeDutyCycle(x)
     servo1.ChangeDutyCycle(y)
+    time.sleep(5)
     Servo.stop()
 
     
