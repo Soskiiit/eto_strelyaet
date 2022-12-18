@@ -130,6 +130,8 @@ def get_cords():
 def povorot(cords):
     servo = GPIO.PWM(11,50)
     servo1 = GPIO.PWM(40,50)
+    servo.start(0)
+    servo1.start(0)
     x = cords[0] * 10
     y = cords[1] * 10
     servo.ChangeDutyCycle(x)
