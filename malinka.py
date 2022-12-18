@@ -6,6 +6,7 @@ from datetime import datetime
 import cv2
 import time
 import psutil
+import RPi.GPIO as GPIO
 
 
 ### PORTS
@@ -118,7 +119,18 @@ def get_cords():
             print(cords)
         except:
             pass
-
+        
+        
+def povorot():
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setup(11,GPIO.OUT)
+    GPIO.setup(40,GPIO.OUT)
+    servo = GPIO.PWM(11,50)
+    servo1 = GPIO.PWM(40,50)
+    servo.ChangeDutyCycle(x)
+    servo1.ChangeDutyCycle(y)
+    Servo.stop()
+    GPIO.cleanup()
 
 host_ip = None
 while host_ip == None:
