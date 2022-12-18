@@ -130,8 +130,8 @@ def povorot():
     servo.ChangeDutyCycle(x)
     servo1.ChangeDutyCycle(y)
     Servo.stop()
-    GPIO.cleanup()
 
+    
 host_ip = None
 while host_ip == None:
     local_ips = []
