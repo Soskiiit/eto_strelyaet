@@ -17,6 +17,12 @@ import RPi.GPIO as GPIO
 # 4123 - web server for user
 
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11,GPIO.OUT)
+GPIO.setup(40,GPIO.OUT)
+servo = GPIO.PWM(11,50)
+servo1 = GPIO.PWM(40,50)
+
 def scan_Ip(ip):
     global local_ips
     addr = net + str(ip)
@@ -122,11 +128,6 @@ def get_cords():
         
         
 def povorot():
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(11,GPIO.OUT)
-    GPIO.setup(40,GPIO.OUT)
-    servo = GPIO.PWM(11,50)
-    servo1 = GPIO.PWM(40,50)
     servo.ChangeDutyCycle(x)
     servo1.ChangeDutyCycle(y)
     Servo.stop()
