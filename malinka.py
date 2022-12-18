@@ -20,10 +20,6 @@ import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11,GPIO.OUT)
 GPIO.setup(40,GPIO.OUT)
-servo = GPIO.PWM(11,50)
-global servo
-servo1 = GPIO.PWM(40,50)
-global servo1
 
 
 def scan_Ip(ip):
@@ -132,6 +128,8 @@ def get_cords():
         
         
 def povorot(cords):
+    servo = GPIO.PWM(11,50)
+    servo1 = GPIO.PWM(40,50)
     x = cords[0] * 10
     y = cords[1] * 10
     servo.ChangeDutyCycle(x)
