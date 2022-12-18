@@ -123,13 +123,14 @@ def get_cords():
                     cords = [int(data.split("_")[1]) / int(data.split("_")[2]), int(data.split("_")[3]) / int(data.split("_")[4])]
             conn.close()
             print(cords)
+            povorot()
         except:
             pass
         
         
 def povorot():
-    servo.ChangeDutyCycle(x)
-    servo1.ChangeDutyCycle(y)
+    servo.ChangeDutyCycle(7)
+    servo1.ChangeDutyCycle(7)
     Servo.stop()
 
     
