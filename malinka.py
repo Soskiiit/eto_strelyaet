@@ -132,8 +132,8 @@ def get_cords():
         
         
 def povorot(cords):
-    x = cords[0]
-    y = cords[1]
+    x = cords[0] * 10
+    y = cords[1] * 10
     servo.ChangeDutyCycle(x)
     servo1.ChangeDutyCycle(y)
     Servo.stop()
