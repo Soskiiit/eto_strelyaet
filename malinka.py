@@ -21,7 +21,10 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(11,GPIO.OUT)
 GPIO.setup(40,GPIO.OUT)
 servo = GPIO.PWM(11,50)
+global servo
 servo1 = GPIO.PWM(40,50)
+global servo1
+
 
 def scan_Ip(ip):
     global local_ips
@@ -123,14 +126,16 @@ def get_cords():
                     cords = [int(data.split("_")[1]) / int(data.split("_")[2]), int(data.split("_")[3]) / int(data.split("_")[4])]
             conn.close()
             print(cords)
-            povorot()
+            povorot(cords)
         except:
             pass
         
         
-def povorot():
-    servo.ChangeDutyCycle(7)
-    servo1.ChangeDutyCycle(7)
+def povorot(cords):
+    x = cords[0]
+    y = cords[1]
+    servo.ChangeDutyCycle(x)
+    servo1.ChangeDutyCycle(y)
     Servo.stop()
 
     
