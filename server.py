@@ -299,6 +299,14 @@ def shooter(w, h, w_max, h_max):
     return "ok"
 
 
+@app.route('/get_model', methods=['POST'])
+def uploadd_file():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save("model.hzkakoiformat")
+        return 'file uploaded successfully'
+
+
 @app.route("/shoot")
 def shoot():
     return "ok"

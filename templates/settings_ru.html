@@ -212,7 +212,10 @@
 let sleep = (time) => new Promise(resolve => setTimeout(resolve, time));
 let upload = document.querySelector(".upload");
 let uploadBtn = document.querySelector(".upload__button");
+var inputte = document.getElementById('chooseFile');
 uploadBtn.addEventListener("click", async () => {
+var filee = inputte.files[0];
+if (filee) {
     upload.classList.add("uploading");
     await sleep(3000);
     upload.classList.add("uploaded");
@@ -221,13 +224,20 @@ uploadBtn.addEventListener("click", async () => {
     upload.classList.add("uploaded-after");
     await sleep(1000);
     upload.className = "upload";
+}
+else {
+    console.log("no file");
+    upload.classList.add("animate__animated");
+    upload.classList.add("animate__shakeX");
+    upload.classList.add("animate__fast");
+    await sleep(1000);
+    upload.classList.remove("animate__shakeX");
+    upload.classList.remove("animate__animated");
+    upload.classList.remove("animate__fast");
+}
 });
 </script>
 <script>
-  function uploadd(file) {
-  console.log("tipa otpravil")
-}
-
   $('#chooseFile').bind('change', function () {
   var filename = $("#chooseFile").val();
   if (/^\s*$/.test(filename)) {
@@ -245,8 +255,17 @@ uploadBtn.addEventListener("click", async () => {
     var input = document.getElementById('chooseFile');
     var file = input.files[0];
     if (file) {
-      uploadd(file);
-    }
+        console.log(file);
+        const url = '/get_model';
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+            console.log(xhr.responseText);
+        }
+        var formData = new FormData();
+        formData.append("file", file, file.name);
+        xhr.open('POST', url, true);
+        xhr.send(formData);
+        }
     return false;
   }
 </script>
