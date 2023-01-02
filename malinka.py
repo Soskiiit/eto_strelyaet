@@ -6,6 +6,7 @@ from datetime import datetime
 import cv2
 import time
 import psutil
+import RPi.GPIO as GPIO
 
 
 ### PORTS
@@ -14,6 +15,11 @@ import psutil
 # 5121 - sharing stats between pi and server
 # 5320 - sharing images between pi and server
 # 4123 - web server for user
+
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(11,GPIO.OUT)
+GPIO.setup(40,GPIO.OUT)
 
 
 def scan_Ip(ip):
@@ -116,10 +122,26 @@ def get_cords():
                     cords = [int(data.split("_")[1]) / int(data.split("_")[2]), int(data.split("_")[3]) / int(data.split("_")[4])]
             conn.close()
             print(cords)
+            povorot(cords)
         except:
             pass
+        
+        
+def povorot(cords):
+    servo = GPIO.PWM(11,50)
+    servo1 = GPIO.PWM(40,50)
+    servo.start(0)
+    servo1.start(0)
+    x = cords[0] * 10
+    y = cords[1] * 10
+    print(x, y)
+    servo.ChangeDutyCycle(x)
+    servo1.ChangeDutyCycle(y)
+    print(x, y)
+    time.sleep(5)
+    Servo.stop()
 
-
+    
 host_ip = None
 while host_ip == None:
     local_ips = []
